@@ -1,10 +1,10 @@
 [package]
 name = "trim-in-place"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2018"
-repository = "https://github.com/magiclen/scanner-rust"
-homepage = "https://magiclen.org/scanner-rust"
+repository = "https://github.com/magiclen/trim-in-place"
+homepage = "https://magiclen.org/trim-in-place"
 keywords = ["string", "trim", "in-place"]
 categories = ["no-std"]
 description= "In-place trimming strings."
