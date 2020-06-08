@@ -1,0 +1,29 @@
+[package]
+name = "trim-in-place"
+version = "0.1.0"
+authors = ["Magic Len <len@magiclen.org>"]
+edition = "2018"
+repository = "https://github.com/magiclen/scanner-rust"
+homepage = "https://magiclen.org/scanner-rust"
+keywords = ["string", "trim", "in-place"]
+categories = ["no-std"]
+description= "In-place trimming strings."
+readme = "README.md"
+license = "MIT"
+
+[badges.travis-ci]
+repository = "magiclen/trim-in-place"
+branch = "master"
+
+[dependencies]
+
+[dev-dependencies]
+bencher = "0.1.5"
+
+[[bench]]
+name = "trim"
+harness = false
+
+[[bench]]
+name = "no_trim"
+harness = false
