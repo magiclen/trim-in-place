@@ -33,16 +33,16 @@ use core::intrinsics::copy;
 use alloc::string::String;
 
 pub trait TrimInPlace {
-    fn trim_in_place(&mut self);
-    fn trim_start_in_place(&mut self);
-    fn trim_end_in_place(&mut self);
+    fn trim_in_place(&mut self) -> &str;
+    fn trim_start_in_place(&mut self) -> &str;
+    fn trim_end_in_place(&mut self) -> &str;
 
     // TODO trim_matches
 }
 
 impl TrimInPlace for String {
     #[inline]
-    fn trim_in_place(&mut self) {
+    fn trim_in_place(&mut self) -> &str {
         let trimmed_str = self.trim();
 
         let trimmed_str_start_pointer = trimmed_str.as_ptr();
@@ -55,10 +55,12 @@ impl TrimInPlace for String {
 
             v.set_len(trimmed_str_length);
         }
+
+        self.as_str()
     }
 
     #[inline]
-    fn trim_start_in_place(&mut self) {
+    fn trim_start_in_place(&mut self) -> &str {
         let trimmed_str = self.trim_start();
 
         let trimmed_str_start_pointer = trimmed_str.as_ptr();
@@ -71,14 +73,18 @@ impl TrimInPlace for String {
 
             v.set_len(trimmed_str_length);
         }
+
+        self.as_str()
     }
 
     #[inline]
-    fn trim_end_in_place(&mut self) {
+    fn trim_end_in_place(&mut self) -> &str {
         let trimmed_str_length = self.trim_end().len();
 
         unsafe {
             self.as_mut_vec().set_len(trimmed_str_length);
         }
+
+        self.as_str()
     }
 }
