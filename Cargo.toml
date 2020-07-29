@@ -1,16 +1,16 @@
 [package]
 name = "trim-in-place"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2018"
 repository = "https://github.com/magiclen/trim-in-place"
 homepage = "https://magiclen.org/trim-in-place"
 keywords = ["string", "trim", "in-place"]
 categories = ["no-std"]
-description= "In-place trimming strings."
+description = "In-place trimming strings."
 readme = "README.md"
 license = "MIT"
-include = ["src/**/*", "Cargo.toml", "benches/*"]
+include = ["src/**/*", "Cargo.toml", "LICENSE", "README.md", "benches/*"]
 
 [badges.travis-ci]
 repository = "magiclen/trim-in-place"
