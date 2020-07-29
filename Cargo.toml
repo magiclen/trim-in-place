@@ -10,7 +10,7 @@ categories = ["no-std"]
 description = "In-place trimming strings."
 readme = "README.md"
 license = "MIT"
-include = ["src/**/*", "Cargo.toml", "LICENSE", "README.md", "benches/*"]
+include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE", "benches/*"]
 
 [badges.travis-ci]
 repository = "magiclen/trim-in-place"
