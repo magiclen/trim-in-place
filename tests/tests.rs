@@ -28,3 +28,30 @@ fn trim_end() {
 
     assert_eq!(" 1234 abcd", s);
 }
+
+#[test]
+fn trim_matches() {
+    let mut s = String::from("X1234 abcdXX");
+
+    s.trim_matches_in_place('X');
+
+    assert_eq!("1234 abcd", s);
+}
+
+#[test]
+fn trim_start_matches() {
+    let mut s = String::from("X1234 abcdXX");
+
+    s.trim_start_matches_in_place('X');
+
+    assert_eq!("1234 abcdXX", s);
+}
+
+#[test]
+fn trim_end_matches() {
+    let mut s = String::from("X1234 abcdXX");
+
+    s.trim_end_matches_in_place('X');
+
+    assert_eq!("X1234 abcd", s);
+}
