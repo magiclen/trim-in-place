@@ -1,7 +1,7 @@
 Trim in-place
 ====================
 
-[![Build Status](https://travis-ci.org/magiclen/trim-in-place.svg?branch=master)](https://travis-ci.org/magiclen/trim-in-place)
+[![CI](https://github.com/magiclen/trim-in-place/actions/workflows/ci.yml/badge.svg)](https://github.com/magiclen/trim-in-place/actions/workflows/ci.yml)
 
 This crate is used for extending `String` in order to do in-place trimming.
 
