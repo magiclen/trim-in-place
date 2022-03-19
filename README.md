@@ -8,8 +8,6 @@ This crate is used for extending `String` in order to do in-place trimming.
 ## Usage
 
 ```rust
-extern crate trim_in_place;
-
 use trim_in_place::TrimInPlace;
 
 let mut s = String::from(" 1234 abcd  ");

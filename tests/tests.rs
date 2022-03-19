@@ -1,5 +1,3 @@
-extern crate trim_in_place;
-
 use trim_in_place::TrimInPlace;
 
 #[test]

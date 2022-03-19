@@ -1,9 +1,4 @@
-extern crate trim_in_place;
-
-#[macro_use]
-extern crate bencher;
-
-use bencher::Bencher;
+use bencher::{benchmark_group, benchmark_main, Bencher};
 
 use trim_in_place::*;
 
