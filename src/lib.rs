@@ -26,9 +26,8 @@ cargo bench
 
 extern crate alloc;
 
-use core::intrinsics::copy;
-
 use alloc::string::String;
+use core::intrinsics::copy;
 
 pub trait TrimInPlace {
     fn trim_in_place(&mut self) -> &str;

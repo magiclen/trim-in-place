@@ -3,6 +3,7 @@ name = "trim-in-place"
 version = "0.1.7"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2021"
+rust-version = "1.56"
 repository = "https://github.com/magiclen/trim-in-place"
 homepage = "https://magiclen.org/trim-in-place"
 keywords = ["string", "trim", "in-place"]
