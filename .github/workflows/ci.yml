@@ -34,9 +34,12 @@ jobs:
           - macos-latest
           - windows-latest
         toolchain:
+          - 1.56
           - stable
           - nightly
-    name: Test ${{ matrix.toolchain }} on ${{ matrix.os }}
+        features:
+          -
+    name: Test ${{ matrix.toolchain }} on ${{ matrix.os }} (${{ matrix.features }})
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
