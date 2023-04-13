@@ -9,7 +9,6 @@ homepage = "https://magiclen.org/trim-in-place"
 keywords = ["string", "trim", "in-place"]
 categories = ["no-std"]
 description = "In-place trimming strings."
-readme = "README.md"
 license = "MIT"
 include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE", "benches/*"]
 
