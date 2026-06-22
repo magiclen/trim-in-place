@@ -10,7 +10,7 @@ keywords = ["string", "trim", "in-place"]
 categories = ["no-std"]
 description = "In-place trimming strings."
 license = "MIT"
-include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE", "benches/*"]
+include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
 
 [dependencies]
 
