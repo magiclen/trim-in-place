@@ -1,59 +1,100 @@
-use bencher::{benchmark_group, benchmark_main, Bencher};
+use bencher::{benchmark_group, benchmark_main, black_box, Bencher};
 use trim_in_place::*;
 
 const TEXT: &str = "1234 abcd";
 
-fn trim(bencher: &mut Bencher) {
-    bencher.iter(|| {
-        let s = String::from(TEXT);
+#[inline]
+fn reset(input: &mut String) {
+    input.clear();
+    input.push_str(black_box(TEXT));
+}
 
-        s.trim().to_string()
+#[inline]
+fn consume(output: &str) {
+    let checksum =
+        output.as_bytes().iter().fold(0u8, |checksum, byte| checksum.wrapping_add(*byte));
+
+    black_box((output.len(), checksum));
+}
+
+fn trim(bencher: &mut Bencher) {
+    bencher.bytes = TEXT.len() as u64;
+
+    let mut input = String::with_capacity(TEXT.len());
+
+    bencher.iter(|| {
+        reset(&mut input);
+
+        let output = input.trim().to_string();
+
+        consume(&output);
     });
 }
 
 fn trim_in_place(bencher: &mut Bencher) {
+    bencher.bytes = TEXT.len() as u64;
+
+    let mut input = String::with_capacity(TEXT.len());
+
     bencher.iter(|| {
-        let mut s = String::from(TEXT);
+        reset(&mut input);
 
-        s.trim_in_place();
-
-        s
+        input.trim_in_place();
+        consume(input.as_str());
     });
 }
 
 fn trim_start(bencher: &mut Bencher) {
-    bencher.iter(|| {
-        let s = String::from(TEXT);
+    bencher.bytes = TEXT.len() as u64;
 
-        s.trim_start().to_string()
+    let mut input = String::with_capacity(TEXT.len());
+
+    bencher.iter(|| {
+        reset(&mut input);
+
+        let output = input.trim_start().to_string();
+
+        consume(&output);
     });
 }
 
 fn trim_start_in_place(bencher: &mut Bencher) {
+    bencher.bytes = TEXT.len() as u64;
+
+    let mut input = String::with_capacity(TEXT.len());
+
     bencher.iter(|| {
-        let mut s = String::from(TEXT);
+        reset(&mut input);
 
-        s.trim_start_in_place();
-
-        s
+        input.trim_start_in_place();
+        consume(input.as_str());
     });
 }
 
 fn trim_end(bencher: &mut Bencher) {
-    bencher.iter(|| {
-        let s = String::from(TEXT);
+    bencher.bytes = TEXT.len() as u64;
 
-        s.trim_end().to_string()
+    let mut input = String::with_capacity(TEXT.len());
+
+    bencher.iter(|| {
+        reset(&mut input);
+
+        let output = input.trim_end().to_string();
+
+        consume(&output);
     });
 }
 
 fn trim_end_in_place(bencher: &mut Bencher) {
+    bencher.bytes = TEXT.len() as u64;
+
+    let mut input = String::with_capacity(TEXT.len());
+
     bencher.iter(|| {
-        let mut s = String::from(TEXT);
+        reset(&mut input);
 
-        s.trim_end_in_place();
-
-        s
+        input.trim_end_in_place();
+        consume(input.as_str());
     });
 }
 
