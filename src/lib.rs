@@ -59,9 +59,23 @@ fn set_len(string: &mut String, len: usize) -> &str {
 }
 
 pub trait TrimInPlace {
+    /// Trims Unicode whitespace from both ends of this string without allocating a new string.
     fn trim_in_place(&mut self) -> &str;
+
+    /// Trims Unicode whitespace from the start of this string without allocating a new string.
     fn trim_start_in_place(&mut self) -> &str;
+
+    /// Trims Unicode whitespace from the end of this string without allocating a new string.
     fn trim_end_in_place(&mut self) -> &str;
+
+    /// Trims ASCII whitespace from both ends of this string without allocating a new string.
+    fn trim_ascii_in_place(&mut self) -> &str;
+
+    /// Trims ASCII whitespace from the start of this string without allocating a new string.
+    fn trim_ascii_start_in_place(&mut self) -> &str;
+
+    /// Trims ASCII whitespace from the end of this string without allocating a new string.
+    fn trim_ascii_end_in_place(&mut self) -> &str;
 
     /// Trims matching text from both ends of this string without allocating a new string.
     /// For `&str` patterns, this removes repeated prefixes first and then repeated suffixes.
@@ -100,6 +114,35 @@ impl TrimInPlace for String {
     #[inline]
     fn trim_end_in_place(&mut self) -> &str {
         let trimmed_str_length = self.trim_end().len();
+
+        set_len(self, trimmed_str_length)
+    }
+
+    #[inline]
+    fn trim_ascii_in_place(&mut self) -> &str {
+        let (trimmed_str_start_pointer, trimmed_str_length) = {
+            let trimmed_str = self.trim_ascii();
+
+            (trimmed_str.as_ptr(), trimmed_str.len())
+        };
+
+        move_to_front(self, trimmed_str_start_pointer, trimmed_str_length)
+    }
+
+    #[inline]
+    fn trim_ascii_start_in_place(&mut self) -> &str {
+        let (trimmed_str_start_pointer, trimmed_str_length) = {
+            let trimmed_str = self.trim_ascii_start();
+
+            (trimmed_str.as_ptr(), trimmed_str.len())
+        };
+
+        move_to_front(self, trimmed_str_start_pointer, trimmed_str_length)
+    }
+
+    #[inline]
+    fn trim_ascii_end_in_place(&mut self) -> &str {
+        let trimmed_str_length = self.trim_ascii_end().len();
 
         set_len(self, trimmed_str_length)
     }
