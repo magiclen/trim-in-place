@@ -1,4 +1,4 @@
-use bencher::{benchmark_group, benchmark_main, black_box, Bencher};
+use bencher::{Bencher, benchmark_group, benchmark_main, black_box};
 use trim_in_place::*;
 
 const TEXT: &str = "1234 abcd";
