@@ -15,6 +15,40 @@ s.trim_in_place();
 assert_eq!("1234 abcd", s);
 ```
 
+The methods update the original `String`, return a slice of the result, and keep its capacity.
+
+### ASCII whitespace
+
+ASCII trimming leaves non-ASCII whitespace unchanged.
+
+```rust
+use trim_in_place::TrimInPlace;
+
+let mut s = String::from(" \t你好 \u{3000}");
+
+assert_eq!("你好 \u{3000}", s.trim_ascii_in_place());
+```
+
+### Patterns
+
+Patterns can be characters, string slices, character slices or arrays, and predicates.
+The `Pattern` trait is sealed and cannot be implemented outside this crate.
+String patterns remove repeated prefixes first, then repeated suffixes from the remaining text.
+For example, trimming `"aba"` from `"ababa"` leaves `"ba"`.
+An empty string pattern leaves the input unchanged.
+
+```rust
+use trim_in_place::TrimInPlace;
+
+let mut s = String::from("abab1234 abcdab");
+
+assert_eq!("1234 abcd", s.trim_matches_in_place("ab"));
+```
+
+### `no_std`
+
+This crate supports `no_std` and requires `alloc` for `String`.
+
 ## Benchmark
 
 ```bash
@@ -42,6 +76,7 @@ fn move_to_front(string: &mut String, source: *const u8, len: usize) -> &str {
         // `ptr::copy` permits overlap, which is required for in-place trimming.
         copy(source, v.as_mut_ptr(), len);
 
+        // SAFETY: the copied slice is valid UTF-8, and `len` is no larger than the original length.
         v.set_len(len);
     }
 
@@ -51,13 +86,16 @@ fn move_to_front(string: &mut String, source: *const u8, len: usize) -> &str {
 #[inline]
 fn set_len(string: &mut String, len: usize) -> &str {
     unsafe {
-        // SAFETY: callers pass lengths produced by `str` trim methods, so they are always valid UTF-8 boundaries within the current string.
+        // SAFETY: callers pass the length of a valid UTF-8 prefix from `str` trim methods or sealed `Pattern` implementations.
         string.as_mut_vec().set_len(len);
     }
 
     string.as_str()
 }
 
+/// Trims strings in place.
+///
+/// The `String` implementation keeps its capacity and returns a slice of the updated string.
 pub trait TrimInPlace {
     /// Trims Unicode whitespace from both ends of this string without allocating a new string.
     fn trim_in_place(&mut self) -> &str;
@@ -79,12 +117,15 @@ pub trait TrimInPlace {
 
     /// Trims matching text from both ends of this string without allocating a new string.
     /// For `&str` patterns, this removes repeated prefixes first and then repeated suffixes.
+    /// An empty string pattern leaves the input unchanged.
     fn trim_matches_in_place<P: Pattern>(&mut self, pat: P) -> &str;
 
     /// Trims matching text from the start of this string without allocating a new string.
+    /// An empty string pattern leaves the input unchanged.
     fn trim_start_matches_in_place<P: Pattern>(&mut self, pat: P) -> &str;
 
     /// Trims matching text from the end of this string without allocating a new string.
+    /// An empty string pattern leaves the input unchanged.
     fn trim_end_matches_in_place<P: Pattern>(&mut self, pat: P) -> &str;
 }
 

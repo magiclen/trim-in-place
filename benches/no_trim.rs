@@ -1,4 +1,6 @@
-use bencher::{Bencher, benchmark_group, benchmark_main, black_box};
+use std::hint::black_box;
+
+use bencher::{Bencher, benchmark_group, benchmark_main};
 use trim_in_place::*;
 
 const TEXT: &str = "1234 abcd";
@@ -11,10 +13,7 @@ fn reset(input: &mut String) {
 
 #[inline]
 fn consume(output: &str) {
-    let checksum =
-        output.as_bytes().iter().fold(0u8, |checksum, byte| checksum.wrapping_add(*byte));
-
-    black_box((output.len(), checksum));
+    black_box(output);
 }
 
 fn trim(bencher: &mut Bencher) {

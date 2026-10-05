@@ -36,17 +36,18 @@ fn trim_str_matches<'a>(string: &'a str, pat: &str) -> &'a str {
 /// A stable pattern type that can be used by the in-place trim methods.
 ///
 /// This trait is local to this crate because the standard library `Pattern` trait is still unstable to name in public APIs.
-/// The supported patterns are `char`, `&str`, `&[char]`, character arrays, and predicates like `|c| c == 'x'`.
+/// The supported patterns are `char`, `&str`, `&&str`, `&[char]`, character arrays and their references, and predicates like `|c| c == 'x'`.
+/// This trait is sealed and cannot be implemented outside this crate.
 pub trait Pattern: sealed::Sealed {
-    /// Returns the slice after trimming matching text from both ends.
+    /// Returns a subslice of `string` after trimming matching text from both ends.
     #[doc(hidden)]
     fn trim_matches_from(self, string: &str) -> &str;
 
-    /// Returns the slice after trimming matching text from the start.
+    /// Returns a suffix of `string` after trimming matching text from the start.
     #[doc(hidden)]
     fn trim_start_matches_from(self, string: &str) -> &str;
 
-    /// Returns the slice after trimming matching text from the end.
+    /// Returns a prefix of `string` after trimming matching text from the end.
     #[doc(hidden)]
     fn trim_end_matches_from(self, string: &str) -> &str;
 }
