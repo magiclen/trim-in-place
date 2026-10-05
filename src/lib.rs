@@ -26,7 +26,7 @@ cargo bench
 
 extern crate alloc;
 
-use core::intrinsics::copy;
+use core::ptr::copy;
 
 use alloc::string::String;
 
